@@ -29,7 +29,7 @@ app.use(
       new winston.transports.Console(),
       /*
     new winston.transports.File({
-        filename: 'logs/mclimate_decoder.log'
+        filename: 'logs/decoder.log'
     })
     */
     ],
