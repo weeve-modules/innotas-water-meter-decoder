@@ -5,7 +5,7 @@ const app = express()
 const winston = require('winston')
 const expressWinston = require('express-winston')
 const { decode } = require('./utils/decoder')
-const { formatPayload, formatTimeDiff } = require('./utils/util')
+const { isValidURL, formatPayload, formatTimeDiff } = require('./utils/util')
 const fs = require('fs')
 
 //initialization
@@ -82,7 +82,7 @@ app.post('/', async (req, res) => {
     let filename = `${d.getFullYear()}_${d.getMonth() + 1}_${d.getDate()}_${d.getHours()}.txt`
     fs.appendFileSync(filename, `${JSON.stringify(log_output)}\n`)
   }
-  if (EGRESS_URL !== '') {
+  if (isValidURL(EGRESS_URL)) {
     const callRes = await fetch(EGRESS_URL, {
       method: 'POST',
       headers: {
