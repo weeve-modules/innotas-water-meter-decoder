@@ -7,7 +7,7 @@
 | Dockerhub Link | [weevenetwork/innotas-water-meter-decoder](https://hub.docker.com/r/weevenetwork/innotas-water-meter-decoder) |
 | Authors | Mesud Pasic |
 
-- [Innotas Water Sensor Decoder](#Innotas Water Sensor Decoder)
+- [Innotas Water Sensor Decoder](#Innotas-water-sensor-decoder)
   - [Description](#description)
   - [Features](#features)
   - [Environment Variables](#environment-variables)
