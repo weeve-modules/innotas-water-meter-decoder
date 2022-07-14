@@ -1,0 +1,33 @@
+version: 1.0.0
+name: Innotas Water Sensor Decoder
+description: Decoder for Innotas Water Sensor data
+icon: https://icons-020-demo.s3.eu-central-1.amazonaws.com/mi_inno_decoder_process.png
+type: process
+tags:
+  - Innotas
+  - Decoder
+categories:
+  - id: category
+    name: Policy
+image:
+  name: weevenetwork/innotas-water-meter-decoder
+  tag: latest
+environments:
+  - key: NESTED_RESPONSE
+    description: Should output response be a nested structure ?
+    value: ''
+    default: no
+    type: enum
+    options:
+      - yes
+      - no
+    name: Nested response
+commands: []
+document:
+  ports: []
+  volumes: []
+  restart_policy:
+    condition: on-failure
+    delay: 10s
+    max_attempts: 3
+    window: 120s
