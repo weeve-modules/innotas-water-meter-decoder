@@ -82,7 +82,7 @@ app.post('/', async (req, res) => {
     let filename = `${d.getFullYear()}_${d.getMonth() + 1}_${d.getDate()}_${d.getHours()}.txt`
     fs.appendFileSync(filename, `${JSON.stringify(log_output)}\n`)
   }
-  if (isValidURL(EGRESS_URL)) {
+  if (EGRESS_URL) {
     const callRes = await fetch(EGRESS_URL, {
       method: 'POST',
       headers: {
