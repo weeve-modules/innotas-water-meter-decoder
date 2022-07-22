@@ -142,9 +142,9 @@ Decoder for Innotas Water Sensor decodes "data" payload into human-friendly form
 
 ## Environment Variables
 
-- INGRESS_HOST
-- INGRESS_PORT
-- NESTED_RESPONSE
+| Environment Variables | type | Description |
+| --- | --- | --- |
+| NESTED_RESPONSE | string | yes/no enum type, determines if sensor "date" property will be passed in data property or if properties will be extracted as single items and passed with rest of the payload |
 
 ### Module Specific
 
@@ -155,7 +155,6 @@ Decoder for Innotas Water Sensor decodes "data" payload into human-friendly form
 | MODULE_NAME | string | Name of the module |
 | INGRESS_HOST | string | Host where app is running |
 | INGRESS_PORT | string | Port where app is running |
-| NESTED_RESPONSE | string | yes/no enum type, determines if sensor "date" property will be passed in data property or if properties will be extracted as single items and passed with rest of the payload |
 
 ## Dependencies
 
