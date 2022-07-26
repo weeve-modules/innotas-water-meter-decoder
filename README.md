@@ -150,11 +150,11 @@ Decoder for Innotas Water Sensor decodes "data" payload into human-friendly form
 
 ### Set by the weeve Agent on the edge-node
 
-| Environment Variables | type | Description |
-| --- | --- | --- |
-| MODULE_NAME | string | Name of the module |
-| INGRESS_HOST | string | Host where app is running |
-| INGRESS_PORT | string | Port where app is running |
+| Environment Variables | type   | Description               |
+| --------------------- | ------ | ------------------------- |
+| MODULE_NAME           | string | Name of the module        |
+| INGRESS_HOST          | string | Host where app is running |
+| INGRESS_PORT          | string | Port where app is running |
 
 ## Dependencies
 
