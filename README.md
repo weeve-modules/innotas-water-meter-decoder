@@ -4,7 +4,7 @@
 | --- | --- |
 | Name | Innotas Water Sensor Decoder |
 | Version | v1.0.0 |
-| Dockerhub Link | [weevenetwork/innotas-water-meter-decoder](https://hub.docker.com/r/weevenetwork/innotas-water-meter-decoder) |
+| DockerHub | [weevenetwork/innotas-water-meter-decoder](https://hub.docker.com/r/weevenetwork/innotas-water-meter-decoder) |
 | Authors | Mesud Pasic |
 
 - [Innotas Water Sensor Decoder](#Innotas-water-sensor-decoder)
@@ -153,8 +153,10 @@ Decoder for Innotas Water Sensor decodes "data" payload into human-friendly form
 | Environment Variables | type   | Description               |
 | --------------------- | ------ | ------------------------- |
 | MODULE_NAME           | string | Name of the module        |
+| MODULE_TYPE           | string | Type of the module (Input, Processing, Output)    |
 | INGRESS_HOST          | string | Host where app is running |
 | INGRESS_PORT          | string | Port where app is running |
+| EGRESS_URLS           | string | HTTP ReST endpoint for the next module            |
 
 ## Dependencies
 
