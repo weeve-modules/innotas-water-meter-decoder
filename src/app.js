@@ -5,7 +5,7 @@ const app = express()
 const winston = require('winston')
 const expressWinston = require('express-winston')
 const { decode } = require('./utils/decoder')
-const { formatPayload } = require('./utils/util')
+const { formatPayload, send } = require('./utils/util')
 const fs = require('fs')
 
 //initialization
@@ -65,28 +65,9 @@ app.post('/', async (req, res) => {
   // decode deviceEUI
   input_json.devEUI = Buffer.from(input_json.devEUI, 'base64').toString('hex')
   const output_payload = formatPayload(input_json)
+  await send(output_payload)
   if (EGRESS_URLS) {
-    const urls = []
-    const eUrls = EGRESS_URLS.replace(/ /g, '')
-    if (eUrls.indexOf(',') !== -1) {
-      urls.push(...eUrls.split(','))
-    } else {
-      urls.push(eUrls)
-    }
-    urls.forEach(async url => {
-      if (url) {
-        const callRes = await fetch(url, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(output_payload),
-        })
-        if (!callRes.ok) {
-          console.error(`Error passing response data to ${url}`)
-        }
-      }
-    })
+    await send(output_payload)
     return res.status(200).json({ status: true, message: 'Payload processed' })
   } else {
     return res.status(200).json(output_payload)

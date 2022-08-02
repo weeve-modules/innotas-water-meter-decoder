@@ -1,4 +1,4 @@
-const { NESTED_RESPONSE } = require('../config/config')
+const { NESTED_RESPONSE, EGRESS_URLS } = require('../config/config')
 const formatPayload = json => {
   let t = null
   if (!json.rxInfo[0]['time']) {
@@ -29,6 +29,34 @@ const formatPayload = json => {
   }
   return output
 }
+
+const send = async result => {
+  if (EGRESS_URLS) {
+    const urls = []
+    const eUrls = EGRESS_URLS.replace(/ /g, '')
+    urls.push(...eUrls.split(','))
+    urls.forEach(async url => {
+      if (url) {
+        try {
+          const callRes = await fetch(url, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(result),
+          })
+          if (!callRes.ok) {
+            console.error(`Error passing response data to ${url}, status: ${callRes.status}`)
+          }
+        } catch (e) {
+          console.error(`Error making request to: ${url}, error: ${e.message}`)
+        }
+      }
+    })
+  }
+}
+
 module.exports = {
   formatPayload,
+  send,
 }
