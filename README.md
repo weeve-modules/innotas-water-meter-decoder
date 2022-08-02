@@ -150,13 +150,13 @@ Decoder for Innotas Water Sensor decodes "data" payload into human-friendly form
 
 ### Set by the weeve Agent on the edge-node
 
-| Environment Variables | type   | Description               |
-| --------------------- | ------ | ------------------------- |
-| MODULE_NAME           | string | Name of the module        |
-| MODULE_TYPE           | string | Type of the module (Input, Processing, Output)    |
-| INGRESS_HOST          | string | Host where app is running |
-| INGRESS_PORT          | string | Port where app is running |
-| EGRESS_URLS           | string | HTTP ReST endpoint for the next module            |
+| Environment Variables | type   | Description                                    |
+| --------------------- | ------ | ---------------------------------------------- |
+| MODULE_NAME           | string | Name of the module                             |
+| MODULE_TYPE           | string | Type of the module (Input, Processing, Output) |
+| INGRESS_HOST          | string | Host where app is running                      |
+| INGRESS_PORT          | string | Port where app is running                      |
+| EGRESS_URLS           | string | HTTP ReST endpoint for the next module         |
 
 ## Dependencies
 

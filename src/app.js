@@ -5,7 +5,7 @@ const app = express()
 const winston = require('winston')
 const expressWinston = require('express-winston')
 const { decode } = require('./utils/decoder')
-const { isValidURL, formatPayload, formatTimeDiff } = require('./utils/util')
+const { formatPayload, send } = require('./utils/util')
 const fs = require('fs')
 
 //initialization
@@ -43,15 +43,6 @@ app.use(
     }, // optional: allows to skip some log messages based on request and/or response
   })
 )
-const startTime = Date.now()
-//health check
-app.get('/health', async (req, res) => {
-  res.json({
-    serverStatus: 'Running',
-    uptime: formatTimeDiff(Date.now(), startTime),
-    module: MODULE_NAME,
-  })
-})
 //main post listener
 app.post('/', async (req, res) => {
   let json = req.body
@@ -74,17 +65,9 @@ app.post('/', async (req, res) => {
   // decode deviceEUI
   input_json.devEUI = Buffer.from(input_json.devEUI, 'base64').toString('hex')
   const output_payload = formatPayload(input_json)
+  await send(output_payload)
   if (EGRESS_URLS) {
-    const callRes = await fetch(EGRESS_URLS, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(output_payload),
-    })
-    if (!callRes.ok) {
-      return res.status(500).json({ status: false, message: `Error passing response data to ${EGRESS_URLS}` })
-    }
+    await send(output_payload)
     return res.status(200).json({ status: true, message: 'Payload processed' })
   } else {
     return res.status(200).json(output_payload)

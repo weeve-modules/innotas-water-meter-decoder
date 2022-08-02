@@ -10,7 +10,7 @@ type: 'Processing'      # Module type (Input, Processing, Output) that will be u
 image:
   name: 'weevenetwork/innotas-water-meter-decoder'     # Image name from the docker registry.
   tag: 'v1.0.0'                               # Image tag from the docker registry.
-  homepage: 'https://hub.docker.com/weevenetwork/innotas-water-meter-decoder'      # Image homepage from the docker registry.
+  homepage: 'https://hub.docker.com/r/weevenetwork/innotas-water-meter-decoder'      # Image homepage from the docker registry.
 repository: 'https://github.com/weeve-modules/innotas-water-meter-decoder'     # Repository URL to source code.
 envs:                                   # Array of environment variables that will be used to configure the module. Also used to show related fields on the UI.
   - name: Nested response
@@ -22,9 +22,6 @@ envs:                                   # Array of environment variables that wi
       - yes
       - no
     dependencies: []
-ports:                                  # Array of ports that will be exposed by the module.
-  - container: 8080                     # Port number from the container.
-    host: 8080                          # Port number to map on the host.
 mounts: []
 tags:                                   # Array of tags.
   - 'NodeJS'

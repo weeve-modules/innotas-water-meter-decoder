@@ -1,4 +1,4 @@
-const { NESTED_RESPONSE } = require('../config/config')
+const { NESTED_RESPONSE, EGRESS_URLS } = require('../config/config')
 const formatPayload = json => {
   let t = null
   if (!json.rxInfo[0]['time']) {
@@ -29,31 +29,35 @@ const formatPayload = json => {
   }
   return output
 }
-const formatTimeDiff = (t1, t2) => {
-  const diff = Math.max(t1, t2) - Math.min(t1, t2)
-  const SEC = 1000,
-    MIN = 60 * SEC,
-    HRS = 60 * MIN
-  const hrs = Math.floor(diff / HRS)
-  const min = Math.floor((diff % HRS) / MIN).toLocaleString('en-US', { minimumIntegerDigits: 2 })
-  const sec = Math.floor((diff % MIN) / SEC).toLocaleString('en-US', { minimumIntegerDigits: 2 })
-  const ms = Math.floor(diff % SEC).toLocaleString('en-US', { minimumIntegerDigits: 4, useGrouping: false })
-  return `${hrs}:${min}:${sec}`
+
+const send = async result => {
+  if (EGRESS_URLS) {
+    const eUrls = EGRESS_URLS.replace(/ /g, '')
+    const urls = eUrls.split(',')
+    urls.forEach(async url => {
+      if (url) {
+        try {
+          const callRes = await fetch(url, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(result),
+          })
+          if (!callRes.ok) {
+            console.error(`Error passing response data to ${url}, status: ${callRes.status}`)
+          }
+        } catch (e) {
+          console.error(`Error making request to: ${url}, error: ${e.message}`)
+        }
+      }
+    })
+  } else {
+    console.error('EGRESS_URLS is not provided.')
+  }
 }
-const isValidURL = str => {
-  var pattern = new RegExp(
-    '^(https?:\\/\\/)?' + // protocol
-      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-      '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-      '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-      '(\\#[-a-z\\d_]*)?$',
-    'i'
-  ) // fragment locator
-  return !!pattern.test(str)
-}
+
 module.exports = {
   formatPayload,
-  formatTimeDiff,
-  isValidURL,
+  send,
 }
